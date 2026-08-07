@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Devil World — Small-Batch Hot Sauce &amp; Spicy Goods</title>
+<meta name="description" content="Small-batch hot sauces and spicy condiments, fermented and bottled by hand, ranging from a whisper of heat to genuinely dangerous.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --char:#17120E;
+    --fire:#C4291E;
+    --ember:#E8641B;
+    --sulfur:#E8B23A;
+    --cream:#F5EFE1;
+    --paper:#F5EFE1;
+    --ink:#1C1712;
+    --ink-60: rgba(28,23,18,0.62);
+    --ink-30: rgba(28,23,18,0.26);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Staatliches', sans-serif; font-weight:400; letter-spacing:0.01em; text-transform:uppercase;}
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.15em;
+    font-size:0.7rem;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,60px);}
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- signature: flame-tip rule ---------- */
+  .flame-rule{
+    width:100%; height:20px;
+    background-repeat:repeat-x; background-size:40px 20px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'><path d='M0 20 L10 4 L20 20 L30 4 L40 20 Z' fill='%23C4291E'/></svg>");
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(245,239,225,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(28,23,18,0.12);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px clamp(20px,5vw,60px);}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Staatliches',sans-serif; font-size:1.3rem; letter-spacing:0.02em;}
+  .logo-mark{width:30px; height:30px;}
+  .logo em{font-style:normal; color:var(--fire);}
+  .nav-links{display:flex; gap:26px; align-items:center;}
+  .nav-links a{font-family:'IBM Plex Mono', monospace; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em; position:relative; padding-bottom:3px;}
+  .nav-links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--fire); transition:width .3s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .cart-pill{
+    background:var(--char); color:var(--cream);
+    padding:9px 18px; font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.1em;
+  }
+  .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer;}
+  .nav-toggle span{width:22px; height:1.5px; background:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:96vh;
+    display:flex; align-items:center;
+    padding-top:110px;
+    background:radial-gradient(ellipse at 75% 15%, rgba(232,100,27,0.35), transparent 55%), var(--char);
+    color:var(--cream);
+    overflow:hidden;
+  }
+  .hero-inner{position:relative; z-index:2;}
+  .badge-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--ember); color:var(--ember);
+    padding:7px 14px; margin-bottom:26px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.13em; text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(3.2rem,9.5vw,7.6rem); line-height:0.9;
+  }
+  .hero h1 span{color:var(--fire); -webkit-text-stroke:1px var(--ember);}
+  .hero-sub{margin-top:28px; max-width:480px; font-size:1.06rem; line-height:1.75; color:rgba(245,239,225,0.72); font-family:'Inter',sans-serif; text-transform:none;}
+  .hero-cta{margin-top:40px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:16px 30px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.13em;
+    background:var(--fire); color:var(--cream); border:1px solid var(--fire);
+    transition:background .3s ease, color .3s ease;
+  }
+  .btn:hover{background:transparent; color:var(--fire);}
+  .btn-line{background:transparent; color:var(--cream); border:1px solid rgba(245,239,225,0.35);}
+  .btn-line:hover{background:rgba(245,239,225,0.1);}
+
+  .hero-facts{
+    margin-top:70px; padding-top:26px; border-top:1px solid rgba(245,239,225,0.16);
+    display:flex; gap:clamp(28px,6vw,60px); flex-wrap:wrap;
+  }
+  .fact-num{font-family:'Staatliches',sans-serif; font-size:1.9rem; color:var(--ember);}
+  .fact-label{margin-top:4px; color:rgba(245,239,225,0.55); font-size:0.66rem; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.06em;}
+
+  /* ---------- section shell ---------- */
+  section{padding:110px 0;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:36px; margin-bottom:58px; flex-wrap:wrap;}
+  .section-head .mono{color:var(--fire); display:block; margin-bottom:12px;}
+  .section-head h2{font-size:clamp(2.2rem,4.6vw,3.3rem); max-width:580px;}
+  .section-head p{max-width:320px; color:var(--ink-60); line-height:1.7; font-size:0.94rem; font-family:'Inter',sans-serif;}
+
+  /* ---------- shop ---------- */
+  .shop{background:var(--paper);}
+  .p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px;}
+  .p-card{position:relative;}
+  .p-thumb{
+    aspect-ratio:4/5; background:var(--char);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; margin-bottom:16px;
+  }
+  .p-thumb svg{width:44%; transition:transform .5s ease;}
+  .p-card:hover .p-thumb svg{transform:scale(1.06) rotate(-2deg);}
+  .p-badge{
+    position:absolute; top:12px; left:12px;
+    background:var(--sulfur); color:var(--char);
+    font-family:'IBM Plex Mono',monospace; font-size:0.6rem;
+    text-transform:uppercase; letter-spacing:0.1em;
+    padding:5px 10px;
+  }
+  .heat-dots{position:absolute; top:14px; right:14px; display:flex; gap:4px;}
+  .heat-dots i{width:7px; height:7px; border-radius:50%; background:rgba(245,239,225,0.25);}
+  .heat-dots i.on{background:var(--fire);}
+  .p-title{font-family:'Staatliches',sans-serif; font-size:1.35rem; margin-bottom:4px; letter-spacing:0.01em;}
+  .p-desc{font-size:0.86rem; color:var(--ink-60); line-height:1.6; margin-bottom:8px;}
+  .p-price{font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color:var(--fire);}
+
+  /* ---------- story ---------- */
+  .story{background:var(--char); color:var(--cream);}
+  .story-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:center;}
+  .story .mono{color:var(--ember);}
+  .story h2{font-size:clamp(2.2rem,4.6vw,3.3rem); margin:18px 0 22px;}
+  .story p{color:rgba(245,239,225,0.7); line-height:1.85; font-size:1.02rem; margin-bottom:18px; font-family:'Inter',sans-serif; text-transform:none;}
+  .story-figure{background:#221A13; padding:34px; border:1px solid rgba(245,239,225,0.14);}
+  .story-quote{font-family:'Staatliches',sans-serif; font-size:1.5rem; line-height:1.3;}
+  .story-quote span{display:block; margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:0.64rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ember);}
+
+  /* ---------- heat guide ---------- */
+  .guide{background:var(--paper);}
+  .g-list{border-top:1px solid rgba(28,23,18,0.16);}
+  .g-item{
+    display:grid; grid-template-columns:170px 1fr 1fr; gap:30px;
+    padding:28px 0; border-bottom:1px solid rgba(28,23,18,0.16); align-items:center;
+  }
+  .g-level{font-family:'Staatliches',sans-serif; font-size:1.1rem; color:var(--fire);}
+  .g-dots{display:flex; gap:4px; margin-top:8px;}
+  .g-dots i{width:8px; height:8px; border-radius:50%; background:rgba(28,23,18,0.15);}
+  .g-dots i.on{background:var(--fire);}
+  .g-item h3{font-size:1.15rem; margin-bottom:6px; font-family:'Staatliches',sans-serif; text-transform:uppercase;}
+  .g-item p{color:var(--ink-60); font-size:0.9rem; line-height:1.6; font-family:'Inter',sans-serif;}
+
+  /* ---------- band ---------- */
+  .band{background:var(--fire); color:var(--cream); padding:90px 0; text-align:center;}
+  .band h2{font-size:clamp(1.9rem,4.6vw,2.8rem); max-width:760px; margin:0 auto 20px;}
+  .band .mono{color:var(--sulfur); display:block; margin-top:16px;}
+
+  /* ---------- newsletter ---------- */
+  .signup{background:var(--paper);}
+  .signup-box{
+    background:var(--char); color:var(--cream);
+    padding:clamp(44px,7vw,80px);
+    display:grid; grid-template-columns:1.2fr 1fr; gap:44px; align-items:center;
+  }
+  .signup-box h2{font-size:clamp(2rem,4.6vw,2.8rem); margin-bottom:14px;}
+  .signup-box p{color:rgba(245,239,225,0.68); line-height:1.7; max-width:400px; font-family:'Inter',sans-serif; text-transform:none;}
+  .signup-form{display:flex; gap:0; border-bottom:1px solid rgba(245,239,225,0.4); padding-bottom:12px;}
+  .signup-form input{
+    flex:1; background:transparent; border:none; outline:none;
+    color:var(--cream); font-family:'Inter',sans-serif; font-size:1rem;
+  }
+  .signup-form input::placeholder{color:rgba(245,239,225,0.45);}
+  .signup-form button{
+    background:none; border:none; color:var(--ember);
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em;
+    cursor:pointer; padding-left:16px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{background:var(--char); color:rgba(245,239,225,0.55); padding:64px 0 26px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:36px; padding-bottom:44px;}
+  .foot-brand .logo{color:var(--cream); margin-bottom:14px;}
+  .foot-brand p{font-size:0.85rem; line-height:1.7; max-width:270px; font-family:'Inter',sans-serif;}
+  .foot-col .mono{color:var(--ember); display:block; margin-bottom:16px;}
+  .foot-col a{display:block; font-size:0.85rem; margin-bottom:9px; color:rgba(245,239,225,0.6); font-family:'Inter',sans-serif;}
+  .foot-col a:hover{color:var(--cream);}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:22px; border-top:1px solid rgba(245,239,225,0.12); font-size:0.74rem;}
+
+  @media (max-width:920px){
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    .p-grid{grid-template-columns:repeat(2,1fr);}
+    .story-grid{grid-template-columns:1fr;}
+    .g-item{grid-template-columns:120px 1fr;}
+    .g-item p{grid-column:2/3;}
+    .signup-box{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .p-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none">
+        <path d="M20 4 C12 14 10 20 12 28 C13.5 33 17 36 20 36 C23 36 26.5 33 28 28 C30 20 28 14 20 4 Z" fill="#C4291E"/>
+        <path d="M20 14 C16 20 15.5 24 17 28 C17.8 30 19 31.5 20 31.5 C21 31.5 22.2 30 23 28 C24.5 24 24 20 20 14 Z" fill="#E8B23A"/>
+      </svg>
+      the devil <em>world</em>
+    </div>
+    <div class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#story">Our Story</a>
+      <a href="#guide">Heat Guide</a>
+      <a href="#signup">Join the List</a>
+      <a href="#" class="cart-pill">Cart (0)</a>
+    </div>
+    <button class="nav-toggle" aria-label="menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="badge-tag">Small-batch, fermented, bottled by hand</div>
+    <h1>Bottled heat.<br>Bottled <span>sin.</span></h1>
+    <p class="hero-sub">We ferment our peppers longer than most sauces bother to, then bottle the result in small runs — from a sauce mild enough for eggs to one we genuinely warn people about.</p>
+    <div class="hero-cta">
+      <a href="#shop" class="btn">Shop the Sauces</a>
+      <a href="#guide" class="btn btn-line">Find Your Heat Level</a>
+    </div>
+    <div class="hero-facts">
+      <div><div class="fact-num">6</div><div class="fact-label">Sauces in rotation</div></div>
+      <div><div class="fact-num">21</div><div class="fact-label">Days fermented, minimum</div></div>
+      <div><div class="fact-num">2M+</div><div class="fact-label">Scoville, top of the range</div></div>
+      <div><div class="fact-num">0</div><div class="fact-label">Fillers or shortcuts</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="flame-rule"></div>
+
+<section class="shop" id="shop">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">The lineup</span>
+        <h2>Six sauces, every one fermented</h2>
+      </div>
+      <p>Dots on each bottle mark the heat level — check the guide below before you commit to the top shelf.</p>
+    </div>
+    <div class="p-grid reveal">
+      <div class="p-card">
+        <div class="p-thumb">
+          <span class="p-badge">Gateway</span>
+          <div class="heat-dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#E8641B"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#221A13"/></svg>
+        </div>
+        <div class="p-title">Morning Ember</div>
+        <div class="p-desc">Roasted red jalapeño, citrus, and a little honey. Made for eggs.</div>
+        <div class="p-price">$11.00</div>
+      </div>
+      <div class="p-card">
+        <div class="p-thumb">
+          <div class="heat-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#C4291E"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#221A13"/></svg>
+        </div>
+        <div class="p-title">Original Sin</div>
+        <div class="p-desc">Our house sauce: fresno chili, garlic, and 30 days of ferment. The one to start with.</div>
+        <div class="p-price">$12.00</div>
+      </div>
+      <div class="p-card">
+        <div class="p-thumb">
+          <span class="p-badge">New</span>
+          <div class="heat-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#E8B23A"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#221A13"/></svg>
+        </div>
+        <div class="p-title">Brimstone Gold</div>
+        <div class="p-desc">Scotch bonnet and mango, fermented with turmeric for a smoky-sweet burn.</div>
+        <div class="p-price">$13.00</div>
+      </div>
+      <div class="p-card">
+        <div class="p-thumb">
+          <div class="heat-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#8C2016"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#221A13"/></svg>
+        </div>
+        <div class="p-title">Cloven Hoof</div>
+        <div class="p-desc">Habanero-forward, dark and vinegar-sharp. A daily driver for the heat-tolerant.</div>
+        <div class="p-price">$13.00</div>
+      </div>
+      <div class="p-card">
+        <div class="p-thumb">
+          <span class="p-badge">Warning label</span>
+          <div class="heat-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#17120E"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#E8641B"/></svg>
+        </div>
+        <div class="p-title">The Inferno Pact</div>
+        <div class="p-desc">Reaper and ghost pepper, fermented 60 days. Drops sold with a waiver card, not a joke.</div>
+        <div class="p-price">$16.00</div>
+      </div>
+      <div class="p-card">
+        <div class="p-thumb">
+          <div class="heat-dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          <svg viewBox="0 0 60 100" fill="none"><rect x="18" y="10" width="24" height="76" rx="3" fill="#3B4A2E"/><rect x="22" y="4" width="16" height="10" rx="2" fill="#221A13"/></svg>
+        </div>
+        <div class="p-title">Garden Familiar</div>
+        <div class="p-desc">Green jalapeño and herbs — the mildest bottle we make, still fully fermented.</div>
+        <div class="p-price">$11.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div class="reveal">
+      <span class="mono">Since 2017</span>
+      <h2>Started in a garage with a bucket of chilies</h2>
+      <p>The Devil World started when a home ferment went sideways in the best way — a five-gallon bucket of jalapeños left too long turned into something sharper and more complex than any sauce we'd bought. We kept doing it on purpose after that.</p>
+      <p>Every bottle we sell is still fermented the long way: whole peppers, salt brine, and patience, not vinegar and shortcuts. It takes weeks longer than most hot sauce on a shelf. We think you can taste the difference.</p>
+      <a href="#shop" class="btn btn-line">Shop the Sauces</a>
+    </div>
+    <div class="story-figure reveal">
+      <div class="story-quote">"If it's not fermented, it's not one of ours. That's the whole rule."<span>— Kitchen notes, 2019</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="guide" id="guide">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="mono">Before you buy</span>
+        <h2>Find your heat level</h2>
+      </div>
+      <p>Every bottle lists its dot rating on the label — this is what each level actually means.</p>
+    </div>
+    <div class="g-list reveal">
+      <div class="g-item">
+        <div><div class="g-level">Level 1</div><div class="g-dots"><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+        <h3>Everyday Heat</h3>
+        <p>A warm background note — goes on eggs, sandwiches, anything that needs a lift, not a challenge.</p>
+      </div>
+      <div class="g-item">
+        <div><div class="g-level">Level 2–3</div><div class="g-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+        <h3>Real Kick</h3>
+        <p>You'll feel it. Good on tacos, noodles, and anything you're actively trying to wake up.</p>
+      </div>
+      <div class="g-item">
+        <div><div class="g-level">Level 4</div><div class="g-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+        <h3>Committed</h3>
+        <p>A dash goes a long way. Keep a drink nearby the first time and adjust from there.</p>
+      </div>
+      <div class="g-item">
+        <div><div class="g-level">Level 5</div><div class="g-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+        <h3>The Inferno Pact</h3>
+        <p>A drop, not a dash. Not recommended for kids or anyone new to superhots — read the label first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap reveal">
+    <h2>"Original Sin is the only hot sauce I've ever finished a bottle of on purpose. It's just good."</h2>
+    <span class="mono">— R. Okafor, verified buyer</span>
+  </div>
+</section>
+
+<section class="signup" id="signup">
+  <div class="wrap">
+    <div class="signup-box reveal">
+      <div>
+        <h2>Small batches, gone fast</h2>
+        <p>We ferment in limited runs and restock a few times a year. The list hears about it first — including when a new heat level drops.</p>
+      </div>
+      <form class="signup-form" onsubmit="return false;">
+        <input type="email" placeholder="you@example.com" required>
+        <button type="submit">Join →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo">the devil <em style="font-style:normal;color:var(--ember);">world</em></div>
+        <p>Small-batch, fermented hot sauce, made by hand from mild to genuinely dangerous.</p>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Shop</span>
+        <a href="#shop">All sauces</a>
+        <a href="#shop">Gift sets</a>
+        <a href="#shop">Merch</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">About</span>
+        <a href="#story">Our story</a>
+        <a href="#guide">Heat guide</a>
+        <a href="#signup">Newsletter</a>
+      </div>
+      <div class="foot-col">
+        <span class="mono">Help</span>
+        <a href="#">Shipping</a>
+        <a href="#">Ingredients</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 The Devil World. Small-batch hot sauce.</span>
+      <span>thedevilworld.shop</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle?.addEventListener('click', ()=>{
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:fixed;top:64px;left:0;right:0;background:#F5EFE1;flex-direction:column;padding:24px;gap:18px;border-bottom:1px solid rgba(28,23,18,0.12);';
+  });
+</script>
+
+</body>
+</html>
